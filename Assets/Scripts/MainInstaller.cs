@@ -36,8 +36,6 @@ namespace SkyTecGamesTest
 
 		public override void InstallBindings()
 		{
-			Container.UnbindAll();
-
 			//Bind Player factory
 			Container.BindFactory<GameObject, int, Player, Player.PlayerFactory>()
 				.FromFactory<Player.PlayerCustomFactory>();
