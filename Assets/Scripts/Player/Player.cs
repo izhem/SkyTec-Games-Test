@@ -98,13 +98,6 @@ namespace SkyTecGamesTest
 			CmdSpawnShip();
 		}
 
-		public override void OnNetworkDestroy()
-		{
-			base.OnNetworkDestroy();
-
-			_playerLeavedMatch.Fire(this);
-		}
-
 		void Start()
 		{
 			_gamePaused += OnPause;
@@ -119,8 +112,12 @@ namespace SkyTecGamesTest
 			_gamePausedFromServer -= OnPauseFromServer;
 			_gameResumed -= OnResume;
 			_gameResumedFromServer -= OnResumeFromServer;
+			_playerLeavedMatch.Fire(this);
 
-			//_playerLeavedMatch.Fire(this);
+			if (isLocalPlayer && isServer)
+			{
+				NetworkServer.ClearLocalObjects();
+			}
 		}
 
 		[Command] public void CmdRemoveShield()

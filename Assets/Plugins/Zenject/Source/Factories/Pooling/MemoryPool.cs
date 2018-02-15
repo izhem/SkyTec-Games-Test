@@ -61,7 +61,7 @@ namespace Zenject
         public TValue Spawn(TParam1 param1, TParam2 param2, TParam3 param3)
         {
             var item = GetInternal();
-            Reinitialize(param1, param2, param3, item);
+			Reinitialize(param1, param2, param3, item);
             return item;
         }
 

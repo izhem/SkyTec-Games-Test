@@ -119,18 +119,42 @@ namespace Zenject
         {
             TContract item;
 
-            if (_inactiveItems.Count == 0)
-            {
-                ExpandPool();
-                Assert.That(!_inactiveItems.IsEmpty());
-            }
+			bool ok = false;
+			while (!ok)
+			{
+				ok = true;
+				if (_inactiveItems.Count == 0)
+				{
+					ExpandPool();
+					Assert.That(!_inactiveItems.IsEmpty());
+				}
 
-            item = _inactiveItems.Pop();
+				item = _inactiveItems.Pop();
+				var itemComp = item as UnityEngine.Component;
+				if (itemComp == null)
+				{
+					ok = false;
+					UnityEngine.GameObject.Destroy(itemComp);
+					//if (UnityEngine.Networking.NetworkServer.active)
+					//{
+					//	UnityEngine.Networking.NetworkServer.Destroy(itemComp.gameObject);
+					//}
+					//else
+					//{
+					//	UnityEngine.GameObject.Destroy(itemComp);
+					//}
+				}
 
-            _activeCount++;
+				if (ok)
+				{
+					_activeCount++;
 
-            OnSpawned(item);
-            return item;
+					OnSpawned(item);
+					return item;
+				}
+			}
+
+			return default(TContract);
         }
 
         void ExpandPool()

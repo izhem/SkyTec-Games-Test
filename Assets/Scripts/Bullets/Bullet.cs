@@ -103,6 +103,7 @@ namespace SkyTecGamesTest
 			_pool.Despawn(this);
 		}
 
+
 		public class BulletsPool : MemoryPool<BulletType, Vector3, Player, Bullet>
 		{
 			[InjectOptional(Id = "BulletsParent")] Transform _parent;
@@ -116,8 +117,7 @@ namespace SkyTecGamesTest
 			}
 
 			protected override void OnSpawned(Bullet item)
-			{
-
+			{ 
 			}
 
 			protected override void OnDespawned(Bullet item)

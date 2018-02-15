@@ -44,26 +44,27 @@ namespace SkyTecGamesTest
 			Container.BindFactory<GameObject, Player, SpaceShip, SpaceShip.SpaceShipFactory>()
 				.FromFactory<SpaceShip.SpaceShipCustomFactory>();
 
-			//Bind Asteroid pool
-			Container.BindMemoryPool<Asteroid, Asteroid.AsteroidsPool, Asteroid.AsteroidsPool>()
-				.WithInitialSize(_initialAsteroidsPoolSize)
-				.ExpandByDoubling()
-				.FromComponentInNewPrefab(_asteroidPrefab);
-
+			
+				
 			//Bind wayDelta for asteroids movement through the AsteroidCurve
 			Container.Bind<float>().WithId("WayDelta").FromInstance(_wayDelta).AsSingle();
 
 			//Bind parent for Asteroids
 			Container.Bind<Transform>().WithId("AsteroidsParent").FromInstance(_asteroidsParent).AsCached();
 
-			//Bind Bullets pool
-			Container.BindMemoryPool<Bullet, Bullet.BulletsPool, Bullet.BulletsPool>()
-				.WithInitialSize(_initialBulletsPoolSize)
-				.ExpandByDoubling()
-				.FromComponentInNewPrefab(_bulletPrefab);
-
 			//Bind parent for Bullets
 			Container.Bind<Transform>().WithId("BulletsParent").FromInstance(_bulletsParent).AsCached();
+
+			//Bind Asteroid pool
+			Container.BindMemoryPool<Asteroid, Asteroid.AsteroidsPool, Asteroid.AsteroidsPool>()
+				.ExpandByDoubling()
+				.FromComponentInNewPrefab(_asteroidPrefab);
+
+			//Bind Bullets pool
+			Container.BindMemoryPool<Bullet, Bullet.BulletsPool, Bullet.BulletsPool>()
+				.ExpandByDoubling()
+				.FromComponentInNewPrefab(_bulletPrefab).NonLazy();
+
 
 			//Bind Bullets pool
 			Container.BindMemoryPool<Effect, Effect.EffectsPool, Effect.EffectsPool>()

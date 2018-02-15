@@ -84,14 +84,6 @@ namespace SkyTecGamesTest
 			protected override void OnCreated(Effect item)
 			{
 				item.gameObject.SetActive(false);
-				if (!item._wasInjected)
-				{
-					var context = FindObjectOfType<SceneContext>();
-					if (context != null)
-					{
-						context.Container.Inject(this);
-					}
-				}
 
 				item.transform.parent = _parent;
 			}
