@@ -23,6 +23,10 @@ namespace SkyTecGamesTest
 		public static string InternalIP { get; set; }
 		public static string DeviceExternalIP { get; set; }
 
+		[SerializeField] bool _useExternalIp;
+		[SerializeField] int _externalPort;
+		[SerializeField] int _internalPort;
+
 		float _time;
 
 		[SerializeField] float _timeToFindExternalIp = 5;
@@ -34,7 +38,17 @@ namespace SkyTecGamesTest
 		public static void Host()
 		{
 			Instance.networkPort = InternalPort;
-			Instance.networkAddress = InternalIP;
+			if (Instance._useExternalIp)
+			{
+				Instance.networkAddress = ExternalIP;
+				Instance.networkPort = Instance._externalPort;
+			}
+			else
+			{
+				Instance.networkAddress = InternalIP;
+				Instance.networkPort = Instance._internalPort;
+			}
+
 			Instance.serverBindAddress = Instance.networkAddress;
 			Instance.serverBindToIP = true;
 			NetworkServer.Reset();
@@ -134,7 +148,7 @@ namespace SkyTecGamesTest
 			INatDevice device = args.Device;
 
 			DeviceExternalIP = device.GetExternalIP().ToString();
-			device.CreatePortMap(new Mapping(Protocol.Tcp, ExternalPort, networkPort));
+			device.CreatePortMap(new Mapping(Protocol.Tcp, networkPort, networkPort));
 
 		}
 

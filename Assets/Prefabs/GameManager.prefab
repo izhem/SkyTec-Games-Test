@@ -128,4 +128,7 @@ MonoBehaviour:
   matchSize: 4
   isNetworkActive: 0
   matchMaker: {fileID: 0}
+  _useExternalIp: 0
+  _externalPort: 0
+  _internalPort: 0
   _timeToFindExternalIp: 5
